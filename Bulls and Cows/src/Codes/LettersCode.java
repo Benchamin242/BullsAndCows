@@ -10,10 +10,6 @@ public class LettersCode extends SecretCode{
     public LettersCode(String fileLocation) {
         File wordsCSV = new File("src/"+fileLocation);
 
-        if (!wordsCSV.exists()){
-            throw new RuntimeException("Word file not found");
-        }
-
         Scanner sc;
 
         try{
