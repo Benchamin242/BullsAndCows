@@ -1,35 +1,50 @@
 package Codes;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
-public class LettersCode extends SecretCode{
-    public LettersCode(String fileLocation) {
-        File wordsCSV = new File("src/"+fileLocation);
+public class LettersCode extends SecretCode {
+    private String wordListFile;
 
-        Scanner sc;
+    public LettersCode(String wordListFile) {
+        this.wordListFile = wordListFile;
+    }
 
-        try{
-            sc = new Scanner(wordsCSV);
-        } catch (FileNotFoundException e){
-            throw new RuntimeException("Word file not found");
+    @Override
+    public void generateCode() {
+        List<String> wordList = readWordListFromFile(wordListFile);
+
+        if (!wordList.isEmpty()) {
+
+            Random random = new Random();
+            int index = random.nextInt(wordList.size());
+            decipheredCode = wordList.get(index);
         }
+    }
 
-        ArrayList<String> wordsList = new ArrayList<>();
+    private List<String> readWordListFromFile(String filename) {
+        List<String> wordList = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("src/"+filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
 
-        sc.useDelimiter("\\n");
-        while (sc.hasNext())
-        {
-            wordsList.add(sc.next());
-        }
-        sc.close();
+                String[] words = line.split(",");
+                for (String word : words) {
+                    wordList.add(word.trim().toLowerCase());
+                }
+            }
+        } catch (IOException ignored) {}
 
-        Random rand = new Random();
-        int index = rand.nextInt(wordsList.size());
+        return wordList;
+    }
 
-        super.deciferedString = wordsList.get(index);
+    @Override
+    public Map<String,Integer> makeGuess(String userInput) {
+        return super.getBullsAndCows(userInput);
     }
 }

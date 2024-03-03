@@ -1,3 +1,5 @@
+package Classes;
+
 public class Player {
     private final String username;
     private int numberOfBulls;
@@ -14,11 +16,7 @@ public class Player {
     }
 
     public Player(){
-        this.username = "No username entered";
-        this.numberOfBulls = 0;
-        this.numberOfCows = 0;
-        this.codesAttempted = 0;
-        this.codesDeciphered = 0;
+        this("No username entered",0,0,0,0);
     }
 
     public void updateBulls(int numberOfBulls) {
