@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class LettersCode extends SecretCode {
@@ -42,7 +43,7 @@ public class LettersCode extends SecretCode {
     }
 
     @Override
-    public void makeGuess(String userInput) {
-
+    public Map<String,Integer> makeGuess(String userInput) {
+        return super.getBullsAndCows(userInput);
     }
 }

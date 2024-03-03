@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
@@ -28,9 +29,41 @@ public class Game {
         code.generateCode();
         System.out.printf("The game has started with the code: %s%n", code.decipheredCode);
 
+        String userGuess;
+
+        boolean codeDeciphered=false;
+
+        while (!codeDeciphered){
+            userGuess = getUserGuess();
+
+            Map<String, Integer> bullsAndCows = null;
+
+            try{
+                bullsAndCows = code.makeGuess(userGuess);
+            } catch (Exception e){
+                System.out.println("Invalid input! Please try again.");
+            }
+
+            //If the user inputted a valid guess
+            if (bullsAndCows != null){
+                Integer numbersOfBulls = bullsAndCows.get("Bulls");
+                Integer numbersOfCows = bullsAndCows.get("Cows");
+
+                if(numbersOfBulls == 4){
+                    codeDeciphered = true;
+                    currentPlayer.incrementCodesDeciphered();
+                    System.out.printf("Congratulations! You deciphered the code! You have deciphered %d code(s).%n",currentPlayer.getCodesDeciphered());
+                }
+                else {
+                    System.out.printf("%s Bulls, %s Cows.%n", numbersOfBulls, numbersOfCows);
+                }
+            }
+        }
+    }
+
+    private String getUserGuess(){
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter your guess: ");
-        String userGuess = scan.nextLine();
-        code.makeGuess(userGuess);
+        return scan.nextLine();
     }
 }
