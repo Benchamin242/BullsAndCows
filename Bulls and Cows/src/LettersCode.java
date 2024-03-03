@@ -17,7 +17,7 @@ public class LettersCode extends SecretCode {
     public void generateCode() {
         List<String> wordList = readWordListFromFile(wordListFile);
 
-        if (wordList != null && !wordList.isEmpty()) {
+        if (!wordList.isEmpty()) {
 
             Random random = new Random();
             int index = random.nextInt(wordList.size());
