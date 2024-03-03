@@ -1,5 +1,3 @@
-import Codes.*;
-
 import java.util.Scanner;
 
 public class Game {
@@ -24,12 +22,15 @@ public class Game {
         } else {
             code = new LettersCode("WordList.csv");
         }
+
+        currentPlayer.incrementCodesAttempted();
+
         code.generateCode();
-        System.out.printf("The game has started with the code: %s%n", code.decipheredString);
+        System.out.printf("The game has started with the code: %s%n", code.decipheredCode);
 
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter your guess: ");
-        //should i take int here or string
-
+        System.out.print("Enter your guess: ");
+        String userGuess = scan.nextLine();
+        code.makeGuess(userGuess);
     }
 }
