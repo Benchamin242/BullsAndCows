@@ -21,11 +21,11 @@ public class Player {
         this.codesDeciphered = 0;
     }
 
-    public void setNumberOfBulls(int numberOfBulls) {
+    public void updateBulls(int numberOfBulls) {
         this.numberOfBulls = numberOfBulls;
     }
 
-    public void setNumberOfCows(int numberOfCows) {
+    public void updateCows(int numberOfCows) {
         this.numberOfCows = numberOfCows;
     }
 
