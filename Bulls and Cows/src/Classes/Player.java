@@ -54,4 +54,5 @@ public class Player {
     public int getCodesDeciphered() {
         return codesDeciphered;
     }
+
 }

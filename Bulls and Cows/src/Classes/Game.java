@@ -82,29 +82,49 @@ public class Game {
         return scan.nextLine();
     }
     public void undoGuess() {
-
-        Map<String, Integer> bullsAndCows = null;
-        Integer numbersOfBulls = bullsAndCows.get("Bulls");
-        Integer numbersOfCows = bullsAndCows.get("Cows");
-
         Scanner scan2 = new Scanner(System.in);
         if (lastGuess == null) {
-            System.out.println("You havent guessed yet");
+            System.out.println("You haven't guessed yet");
             return;
         }
-        System.out.println("Youre last guess was"+ lastGuess);
-        System.out.println("Enter what position you want to change");
+        System.out.println("Your last guess was: " + lastGuess);
+        System.out.println("Enter the position you want to change:");
         int position = scan2.nextInt();
-        if(position < 0 || position > lastGuess.length()) {
+        if (position < 0 || position >= lastGuess.length()) {
             System.out.println("Invalid position");
             return;
         }
-        System.out.println("Enter the new number");
-        int newNumber = scan2.nextInt();
+        System.out.println("Enter the new number:");
+        char newNumber = scan2.next().charAt(0);
         currentPlayer.incrementCodesAttempted();
         lastGuess = lastGuess.substring(0, position) + newNumber + lastGuess.substring(position + 1);
-        System.out.println("Your new guess is " + lastGuess);
-        System.out.printf("%s Bulls, %s Cows.%n", numbersOfBulls, numbersOfCows);
+        System.out.println("Your new guess is: " + lastGuess);
 
+        SecretCode code;
+        if (codeType.equals("Numbers")) {
+            code = new NumbersCode();
+        } else {
+            code = new LettersCode("WordList.csv");
+        }
+
+        Map<String, Integer> bullsAndCows = null;
+
+        try{
+            bullsAndCows = code.makeGuess(lastGuess);
+        } catch (Exception e){
+            System.out.println("Invalid input! Please try again.");
+        }
+
+        if (bullsAndCows != null){
+            Integer numbersOfBulls = bullsAndCows.get("Bulls");
+            Integer numbersOfCows = bullsAndCows.get("Cows");
+            if(numbersOfBulls == 4){
+                System.out.printf("Congratulations! You deciphered the code! You have deciphered %d code(s).%n", currentPlayer.getCodesDeciphered());
+            }
+            else {
+                System.out.printf("%s Bulls, %s Cows.%n", numbersOfBulls, numbersOfCows);
+            }
+        }
     }
+
 }
