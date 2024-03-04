@@ -22,6 +22,18 @@ public abstract class SecretCode {
                 numberOfBulls++;
             }
         }
+         boolean[] usedInCode = new boolean[codeArray.length];
+         for(int i = 0; i < inputArray.length; i++){
+             if(!usedInCode[i]){
+                 for(int j = 0; j < codeArray.length; j++){
+                     if(inputArray[i] == codeArray[j] && !usedInCode[j]){
+                         numberOfCows++;
+                         usedInCode[j] = true;
+                         break;
+                     }
+                 }
+             }
+         }
 
          Map<String, Integer> dictionary = new HashMap<>();
 

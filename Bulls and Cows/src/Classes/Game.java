@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Game {
     private final Player currentPlayer;
     private final String codeType;
+    private String lastGuess;
 
     public Game(Player currentPlayer, String codeType) {
         this.currentPlayer = currentPlayer;
@@ -48,7 +49,7 @@ public class Game {
 
         while (!codeDeciphered){
             userGuess = getUserGuess();
-
+            lastGuess = userGuess;
             Map<String, Integer> bullsAndCows = null;
 
             try{
@@ -61,7 +62,7 @@ public class Game {
             if (bullsAndCows != null){
                 Integer numbersOfBulls = bullsAndCows.get("Bulls");
                 Integer numbersOfCows = bullsAndCows.get("Cows");
-
+                currentPlayer.incrementCodesAttempted();
                 if(numbersOfBulls == 4){
                     codeDeciphered = true;
                     currentPlayer.incrementCodesDeciphered();
@@ -72,11 +73,38 @@ public class Game {
                 }
             }
         }
+
     }
 
     private String getUserGuess(){
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter your guess: ");
         return scan.nextLine();
+    }
+    public void undoGuess() {
+
+        Map<String, Integer> bullsAndCows = null;
+        Integer numbersOfBulls = bullsAndCows.get("Bulls");
+        Integer numbersOfCows = bullsAndCows.get("Cows");
+
+        Scanner scan2 = new Scanner(System.in);
+        if (lastGuess == null) {
+            System.out.println("You havent guessed yet");
+            return;
+        }
+        System.out.println("Youre last guess was"+ lastGuess);
+        System.out.println("Enter what position you want to change");
+        int position = scan2.nextInt();
+        if(position < 0 || position > lastGuess.length()) {
+            System.out.println("Invalid position");
+            return;
+        }
+        System.out.println("Enter the new number");
+        int newNumber = scan2.nextInt();
+        currentPlayer.incrementCodesAttempted();
+        lastGuess = lastGuess.substring(0, position) + newNumber + lastGuess.substring(position + 1);
+        System.out.println("Your new guess is " + lastGuess);
+        System.out.printf("%s Bulls, %s Cows.%n", numbersOfBulls, numbersOfCows);
+
     }
 }
