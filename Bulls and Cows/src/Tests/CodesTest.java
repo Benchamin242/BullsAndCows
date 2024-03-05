@@ -5,10 +5,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import Codes.*;
 
+import java.io.IOException;
+
 public class CodesTest {
 
     @Test
-    public void testGenerateLetterCode(){
+    public void testGenerateLetterCode() throws IOException{
         SecretCode code = new LettersCode("WordList.csv");
 
         assertNotNull(code);
@@ -24,13 +26,13 @@ public class CodesTest {
 
         assertNotNull(code);
 
-        code.generateCode();
+        assertThrows(IOException.class,()-> code.generateCode());
 
         assertNull(code.decipheredCode);
     }
 
     @Test
-    public void testGenerateNumberCode(){
+    public void testGenerateNumberCode() throws IOException {
         SecretCode code = new NumbersCode();
 
         assertNotNull(code);

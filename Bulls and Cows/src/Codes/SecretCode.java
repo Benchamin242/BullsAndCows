@@ -1,5 +1,6 @@
 package Codes;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 public abstract class SecretCode {
     public String decipheredCode;
 
-    public abstract void generateCode();
+    public abstract void generateCode() throws IOException;
 
     public abstract Map < String, Integer > makeGuess(String userInput) throws IllegalArgumentException;
 

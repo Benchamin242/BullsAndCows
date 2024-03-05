@@ -4,6 +4,7 @@ import Codes.LettersCode;
 import Codes.NumbersCode;
 import Codes.SecretCode;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -18,8 +19,7 @@ public class Game {
     }
 
     public Game(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-        this.codeType = "Numbers";
+        this(currentPlayer,"Numbers");
     }
 
     public void PlayGame() {
@@ -33,11 +33,10 @@ public class Game {
 
         currentPlayer.incrementCodesAttempted();
 
-        code.generateCode();
-
-        //If there was an issue reading from the words list file
-        if (code.decipheredCode == null){
-            System.out.println("Error reading word file");
+        try {
+            code.generateCode();
+        } catch (IOException e) {
+            System.err.println("Error reading word file");
             System.exit(-1);
         }
 

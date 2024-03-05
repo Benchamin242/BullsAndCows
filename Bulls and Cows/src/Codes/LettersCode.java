@@ -16,18 +16,17 @@ public class LettersCode extends SecretCode {
     }
 
     @Override
-    public void generateCode() {
+    public void generateCode() throws IOException{
         List<String> wordList = readWordListFromFile(wordListFile);
 
         if (!wordList.isEmpty()) {
-
             Random random = new Random();
             int index = random.nextInt(wordList.size());
             decipheredCode = wordList.get(index);
         }
     }
 
-    private List<String> readWordListFromFile(String filename) {
+    private List<String> readWordListFromFile(String filename) throws IOException{
         List<String> wordList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("src/"+filename))) {
             String line;
@@ -38,7 +37,7 @@ public class LettersCode extends SecretCode {
                     wordList.add(word.trim().toLowerCase());
                 }
             }
-        } catch (IOException ignored) {}
+        }
 
         return wordList;
     }
