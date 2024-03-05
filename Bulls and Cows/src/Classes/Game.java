@@ -55,7 +55,7 @@ public class Game {
             try{
                 bullsAndCows = code.makeGuess(userGuess);
             } catch (Exception e){
-                System.out.println("Invalid input! Please try again.");
+                System.out.println("Invalid input! "+e.getMessage());
             }
 
             //If the user inputted a valid guess

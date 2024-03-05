@@ -12,6 +12,10 @@ public abstract class SecretCode {
     public abstract Map < String, Integer > makeGuess(String userInput) throws IllegalArgumentException;
 
     protected Map < String, Integer > getBullsAndCows(String userInput) {
+        if (userInput.length() != 4){
+            throw new IllegalArgumentException("Guess needs to be of length 4");
+        }
+
         char[] inputArray = userInput.toCharArray();
         char[] codeArray = decipheredCode.toCharArray();
 
@@ -25,15 +29,15 @@ public abstract class SecretCode {
 
         for (int i = 0; i < inputArray.length; i++) {
             if (!bullsIndexList.contains(i)) {
-                for(int j = 0; j < codeArray.length; j++){
-                    if (!bullsIndexList.contains(j) & codeArray[j]==inputArray[i]) {
+                for (int j = 0; j < codeArray.length; j++) {
+                    if (!bullsIndexList.contains(j) & codeArray[j] == inputArray[i]) {
                         numberOfCows++;
                     }
                 }
             }
         }
 
-        Map < String, Integer > dictionary = new HashMap < > ();
+        Map<String, Integer> dictionary = new HashMap<>();
 
         dictionary.put("Bulls", bullsIndexList.size());
         dictionary.put("Cows", numberOfCows);

@@ -16,14 +16,10 @@ public class NumbersCode extends SecretCode {
 
     @Override
     public Map<String,Integer> makeGuess(String userInput){
-        try {
-            if (userInput.length() < 4){
-                throw new IllegalArgumentException("Guess needs to be of length 4");
+        for (char c : userInput.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                throw new IllegalArgumentException("Input is not a number");
             }
-
-            Integer.parseInt(userInput);
-        } catch (NumberFormatException e) {
-             throw new IllegalArgumentException("Input is not a number");
         }
 
         return super.getBullsAndCows(userInput);
