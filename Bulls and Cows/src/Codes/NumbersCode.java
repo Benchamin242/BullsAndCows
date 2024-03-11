@@ -2,16 +2,26 @@ package Codes;
 
 import Codes.SecretCode;
 
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class NumbersCode extends SecretCode {
 
     @Override
     public void generateCode(){
-        Random random = new Random();
-        int code = random.nextInt(10000);
-        decipheredCode = String.format("%04d", code);
+        List<Integer> numbers = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            numbers.add(i);
+        }
+
+        Collections.shuffle(numbers);
+
+        StringBuilder result = new StringBuilder();
+
+        for(int i = 0; i < 4; i++){
+            result.append(numbers.get(i).toString());
+        }
+
+        decipheredCode = result.toString();
     }
 
     @Override
