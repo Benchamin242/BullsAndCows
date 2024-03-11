@@ -51,29 +51,23 @@ public class Game {
         while (!codeDeciphered) {
             userGuess = getUserGuess();
             lastGuess = userGuess;
-            Map<String, Integer> bullsAndCows = null;
 
             try {
-                bullsAndCows = code.makeGuess(userGuess);
+                code.makeGuess(userGuess);
             } catch (Exception e) {
                 System.out.println("Invalid input! " + e.getMessage());
+                continue;
             }
 
-            //If the user inputted a valid guess
-            if (bullsAndCows != null) {
-                Integer numbersOfBulls = bullsAndCows.get("Bulls");
-                Integer numbersOfCows = bullsAndCows.get("Cows");
-                currentPlayer.incrementCodesAttempted();
-                if (numbersOfBulls == 4) {
-                    codeDeciphered = true;
-                    currentPlayer.incrementCodesDeciphered();
-                    System.out.printf("Congratulations! You deciphered the code! You have deciphered %d code(s).%n", currentPlayer.getCodesDeciphered());
-                } else {
-                    System.out.printf("%s Bulls, %s Cows.%n", numbersOfBulls, numbersOfCows);
-                }
+            currentPlayer.incrementCodesAttempted();
+            if (code.currentNumOfBulls == 4) {
+                codeDeciphered = true;
+                currentPlayer.incrementCodesDeciphered();
+                System.out.printf("Congratulations! You deciphered the code! You have deciphered %d code(s).%n", currentPlayer.getCodesDeciphered());
+            } else {
+                System.out.printf("%s Bulls, %s Cows.%n", code.currentNumOfBulls, code.currentNumOfCows);
             }
         }
-
     }
 
     private String getUserGuess() {
@@ -111,9 +105,10 @@ public class Game {
         Map<String, Integer> bullsAndCows = null;
 
         try {
-            bullsAndCows = code.makeGuess(lastGuess);
+            code.makeGuess(lastGuess);
         } catch (Exception e) {
             System.out.println("Invalid input! Please try again.");
+            return;
         }
 
         if (bullsAndCows != null) {

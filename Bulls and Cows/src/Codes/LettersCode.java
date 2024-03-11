@@ -43,13 +43,13 @@ public class LettersCode extends SecretCode {
     }
 
     @Override
-    public Map<String,Integer> makeGuess(String userInput) {
+    public void makeGuess(String userInput) {
         for (char c : userInput.toCharArray()) {
             if (Character.isDigit(c)) {
                 throw new IllegalArgumentException("Input is not a word");
             }
         }
 
-        return super.getBullsAndCows(userInput);
+        super.getBullsAndCows(userInput);
     }
 }
