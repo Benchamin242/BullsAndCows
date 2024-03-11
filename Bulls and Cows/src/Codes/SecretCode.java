@@ -7,6 +7,8 @@ import java.util.Map;
 
 public abstract class SecretCode {
     public String decipheredCode;
+    public int currentNumOfBulls = 0;
+    public int currentNumOfCows = 0;
 
     public abstract void generateCode() throws IOException;
 
@@ -40,7 +42,8 @@ public abstract class SecretCode {
         }
 
         Map<String, Integer> dictionary = new HashMap<>();
-
+        currentNumOfBulls = bullsIndexList.size();
+        currentNumOfCows = numberOfCows;
         dictionary.put("Bulls", bullsIndexList.size());
         dictionary.put("Cows", numberOfCows);
 
