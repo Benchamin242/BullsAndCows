@@ -12,6 +12,7 @@ public abstract class SecretCode {
 
     public abstract Map < String, Integer > makeGuess(String userInput) throws IllegalArgumentException;
 
+
     protected Map < String, Integer > getBullsAndCows(String userInput) {
         if (userInput.length() != 4){
             throw new IllegalArgumentException("Guess needs to be of length 4");
