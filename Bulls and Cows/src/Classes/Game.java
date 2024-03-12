@@ -11,18 +11,27 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private final Player currentPlayer;
-    private final String codeType;
+    private Player currentPlayer;
+    private String codeType;
     private String lastGuess;
+    private Players players;
     private SecretCode code;
 
-    public Game(Player currentPlayer, String codeType) {
-        this.currentPlayer = currentPlayer;
-        this.codeType = codeType;
+    public Game(String playerName, String codeType) {
+       this.codeType = codeType;
+       this.code = codeType.equals("Letter") ? new LettersCode("src/WordList.csv") : new NumbersCode();
+       this.players = new Players("src/players.txt");
+       currentPlayer = this.players.getPlayer(playerName);
+       if(currentPlayer == null) {
+           currentPlayer = new Player(playerName,0,0,0,0);
+           this.players.addPlayer(currentPlayer);
+       }
     }
 
-    public Game(Player currentPlayer) {
-        this(currentPlayer, "Numbers");
+    //Game constructor for tests
+    public Game(Player p, SecretCode s) {
+        currentPlayer = p;
+        code = s;
     }
 
     public void PlayGame() {
@@ -126,10 +135,11 @@ public class Game {
         // TODO add b & c to SecretCode and write to this fill, le string format plus getters
         try {
             File f = new File(filepath);
+            System.out.println(f.exists());
             File tmp = new File("src/temp.txt");
             Scanner sc = new Scanner(f);
             FileWriter fw = new FileWriter(tmp);
-            String override = String.format("%s %s %s", currentPlayer.getUsername(), currGuess, code.decipheredCode + System.lineSeparator());
+            String override = String.format("%s %s %s %d %d", currentPlayer.getUsername(), currGuess, code.decipheredCode, code.currentNumOfBulls, code.currentNumOfCows);
             boolean found = false;
 
             //check if the player already has a saved game
@@ -139,14 +149,14 @@ public class Game {
                 if (line.contains(currentPlayer.getUsername())) {
                     //comment/uncomment out what you need
                     //for prod
-//          System.out.print("do you want to overwrite your current saved game? y/n: ");
-//          String yes_no = new Scanner(System.in).nextLine();
-//          if(yes_no.charAt(0) == 'y') {
-//            fw.write(override);
-//            found = true;
-//          } else System.out.println("aborting overwrite");
+//                    System.out.print("do you want to overwrite your current saved game? y/n: ");
+//                    String yes_no = new Scanner(System.in).nextLine();
+//                    if(yes_no.charAt(0) == 'y') {
+//                        fw.write(override + System.lineSeparator());
+//                        found = true;
+//                    } else System.out.println("aborting overwrite");
                     //for tests
-                    fw.write(override);
+                    fw.write(override + System.lineSeparator());
                     found = true;
                 } else {
                     fw.write(line + System.lineSeparator());
