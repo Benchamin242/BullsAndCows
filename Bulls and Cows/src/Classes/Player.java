@@ -6,17 +6,19 @@ public class Player implements Comparable<Player> {
     private int numberOfCows;
     private int codesAttempted;
     private int codesDeciphered;
+    private int numberOfGuesses;
 
-    public Player(String username, int numberOfBulls, int numberOfCows, int codesAttempted, int codesDeciphered) {
+    public Player(String username, int numberOfBulls, int numberOfCows, int codesAttempted, int codesDeciphered, int numberOfGuesses) {
         this.username = username;
         this.numberOfBulls = numberOfBulls;
         this.numberOfCows = numberOfCows;
         this.codesAttempted = codesAttempted;
         this.codesDeciphered = codesDeciphered;
+        this.numberOfGuesses = numberOfGuesses;
     }
 
     public Player(){
-        this("No username entered",0,0,0,0);
+        this("No username entered",0,0,0,0,0);
     }
 
     public void updateBulls(int numberOfBulls) {
@@ -54,11 +56,13 @@ public class Player implements Comparable<Player> {
     public int getCodesDeciphered() {
         return codesDeciphered;
     }
-
+    public void incrementNumberOfGuesses() {
+        this.numberOfGuesses += 1;
+    }
     @Override
     public String toString(){
-        // ------------------->  name      bulls        cows         CD           CA
-        return "%s|%d|%d|%d|%d".formatted(username,numberOfBulls,numberOfCows,codesDeciphered,codesAttempted);
+        // ------------------->             name      bulls        cows         CD           CA                 NG
+        return "%s|%d|%d|%d|%d|%d".formatted(username,numberOfBulls,numberOfCows,codesDeciphered,codesAttempted,numberOfGuesses);
     }
 
     @Override

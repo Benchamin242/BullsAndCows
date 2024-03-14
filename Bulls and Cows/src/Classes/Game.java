@@ -23,7 +23,7 @@ public class Game {
        this.players = new Players("src/players.txt");
        currentPlayer = this.players.getPlayer(playerName);
        if(currentPlayer == null) {
-           currentPlayer = new Player(playerName,0,0,0,0);
+           currentPlayer = new Player(playerName,0,0,0,0,0);
            this.players.addPlayer(currentPlayer);
        }
     }
@@ -35,7 +35,7 @@ public class Game {
         this.players = new Players(p);
         currentPlayer = p;
         if(currentPlayer == null) {
-            currentPlayer = new Player("playerName",0,0,0,0);
+            currentPlayer = new Player("playerName",0,0,0,0,0);
             this.players.addPlayer(currentPlayer);
         }
     }
@@ -63,6 +63,7 @@ public class Game {
 
         while (!codeDeciphered) {
             userGuess = getUserGuess();
+            currentPlayer.incrementNumberOfGuesses();
             lastGuess = userGuess;
 
             try {

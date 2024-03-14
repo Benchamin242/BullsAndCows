@@ -21,7 +21,7 @@ public class GameTests {
 
     @Before
     public void before(){
-        player = new Player("Test Testerson", 0, 0, 0, 0);
+        player = new Player("Test Testerson", 0, 0, 0, 0,0);
     }
 
 /*
@@ -43,7 +43,7 @@ public class GameTests {
     @Before
     public void initSG1() {
         code = new NumbersCode();
-        player = new Player("idiot", 0, 0, 0,0);
+        player = new Player("idiot", 0, 0, 0,0,0);
         game = new Game(player,code);
         filePath = "saveGametest.csv";
 

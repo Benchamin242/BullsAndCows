@@ -40,7 +40,7 @@ public class Players {
         String line = sc.nextLine();
         String[] split = line.split("\\|");
         // ------------------->  name      bulls        cows         CD           CA
-        allReturn.add(new Player(split[0],Integer.parseInt(split[1]),Integer.parseInt(split[2]),Integer.parseInt(split[3]),Integer.parseInt(split[4])));
+        allReturn.add(new Player(split[0],Integer.parseInt(split[1]),Integer.parseInt(split[2]),Integer.parseInt(split[3]),Integer.parseInt(split[4]),Integer.parseInt(split[5])));
       }
     } catch (FileNotFoundException e) {
       System.out.println(e.getMessage());
