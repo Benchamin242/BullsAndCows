@@ -6,6 +6,10 @@ import java.util.*;
 
 public class NumbersCode extends SecretCode {
 
+    public NumbersCode(){
+        super.codeType = "Numbers";
+    }
+
     @Override
     public void generateCode(){
         List<Integer> numbers = new ArrayList<>();

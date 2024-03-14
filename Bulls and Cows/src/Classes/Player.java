@@ -1,6 +1,6 @@
 package Classes;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private final String username;
     private int numberOfBulls;
     private int numberOfCows;
@@ -20,11 +20,11 @@ public class Player {
     }
 
     public void updateBulls(int numberOfBulls) {
-        this.numberOfBulls = numberOfBulls;
+        this.numberOfBulls += numberOfBulls;
     }
 
     public void updateCows(int numberOfCows) {
-        this.numberOfCows = numberOfCows;
+        this.numberOfCows += numberOfCows;
     }
 
     public void incrementCodesAttempted() {
@@ -53,6 +53,17 @@ public class Player {
 
     public int getCodesDeciphered() {
         return codesDeciphered;
+    }
+
+    @Override
+    public String toString(){
+        // ------------------->  name      bulls        cows         CD           CA
+        return "%s|%d|%d|%d|%d".formatted(username,numberOfBulls,numberOfCows,codesDeciphered,codesAttempted);
+    }
+
+    @Override
+    public int compareTo(Player otherPlayer) {
+        return Integer.compare(otherPlayer.getCodesDeciphered(), getCodesDeciphered());
     }
 
 }

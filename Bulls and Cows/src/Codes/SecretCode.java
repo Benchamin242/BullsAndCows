@@ -9,6 +9,7 @@ public abstract class SecretCode {
     public String decipheredCode;
     public int currentNumOfBulls = 0;
     public int currentNumOfCows = 0;
+    public String codeType;
 
     public abstract void generateCode() throws IOException;
 

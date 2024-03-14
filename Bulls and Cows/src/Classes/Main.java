@@ -2,15 +2,29 @@ package Classes;
 
 import Codes.LettersCode;
 
+import java.util.Scanner;
+
 public class Main {
+    private static final Scanner scanner =  new Scanner(System.in);
 
     public static void main(String[] args) {
-        Player player = new Player("mainMan",0,0,0,0);
-        Game game = new Game(player,new LettersCode("src/WordList.csv"));
-        game.saveGame("Tests/saveGametest.csv", "1010");
-        //Game game = new Classes.Game(player);
-//        while (true){
-//            game.PlayGame();
-//        }
+        System.out.print("Enter username: ");
+
+        String userName = scanner.nextLine().trim();
+
+        Game game = new Game(userName,"Letters");
+
+        boolean startNewGame = true;
+        while (startNewGame){
+            game.PlayGame();
+
+            System.out.print("New game? (y/n): ");
+
+            String newGame = scanner.nextLine();
+
+            if(newGame.trim().equalsIgnoreCase("n")){
+                startNewGame = false;
+            }
+        }
     }
 }

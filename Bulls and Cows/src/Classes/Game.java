@@ -30,8 +30,14 @@ public class Game {
 
     //Game constructor for tests
     public Game(Player p, SecretCode s) {
+        this.codeType = s.codeType;
+        this.code = codeType.equals("Letter") ? new LettersCode("src/WordList.csv") : new NumbersCode();
+        this.players = new Players(p);
         currentPlayer = p;
-        code = s;
+        if(currentPlayer == null) {
+            currentPlayer = new Player("playerName",0,0,0,0);
+            this.players.addPlayer(currentPlayer);
+        }
     }
 
     public void PlayGame() {
@@ -42,8 +48,6 @@ public class Game {
             code = new LettersCode("WordList.csv");
         }
 
-        currentPlayer.incrementCodesAttempted();
-
         try {
             code.generateCode();
         } catch (IOException e) {
@@ -51,7 +55,7 @@ public class Game {
             System.exit(-1);
         }
 
-        System.out.printf("The game has started with the code: %s%n", code.decipheredCode);
+        System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
 
         String userGuess;
 
@@ -72,8 +76,13 @@ public class Game {
             if (code.currentNumOfBulls == 4) {
                 codeDeciphered = true;
                 currentPlayer.incrementCodesDeciphered();
-                System.out.printf("Congratulations! You deciphered the code! You have deciphered %d code(s).%n", currentPlayer.getCodesDeciphered());
+                currentPlayer.updateBulls(code.currentNumOfBulls);
+                currentPlayer.updateCows(code.currentNumOfCows);
+                players.savePlayers();
+                System.out.printf("Congratulations %s! You deciphered the code! You have deciphered %d code(s).%n",currentPlayer.getUsername(), currentPlayer.getCodesDeciphered());
             } else {
+                currentPlayer.updateBulls(code.currentNumOfBulls);
+                currentPlayer.updateCows(code.currentNumOfCows);
                 System.out.printf("%s Bulls, %s Cows.%n", code.currentNumOfBulls, code.currentNumOfCows);
             }
         }
@@ -124,6 +133,7 @@ public class Game {
             Integer numbersOfBulls = bullsAndCows.get("Bulls");
             Integer numbersOfCows = bullsAndCows.get("Cows");
             if (numbersOfBulls == 4) {
+                currentPlayer.incrementCodesDeciphered();
                 System.out.printf("Congratulations! You deciphered the code! You have deciphered %d code(s).%n", currentPlayer.getCodesDeciphered());
             } else {
                 System.out.printf("%s Bulls, %s Cows.%n", numbersOfBulls, numbersOfCows);

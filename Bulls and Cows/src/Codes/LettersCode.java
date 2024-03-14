@@ -12,6 +12,7 @@ public class LettersCode extends SecretCode {
     private String wordListFile;
 
     public LettersCode(String wordListFile) {
+        super.codeType = "Letters";
         this.wordListFile = wordListFile;
     }
 
