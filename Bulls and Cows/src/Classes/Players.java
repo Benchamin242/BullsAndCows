@@ -44,7 +44,7 @@ public class Players {
         allReturn.add(new Player(split[0],Integer.parseInt(split[1]),Integer.parseInt(split[2]),Integer.parseInt(split[3]),Integer.parseInt(split[4]),Integer.parseInt(split[5])));
       }
     } catch (FileNotFoundException e) {
-      System.out.println(e.getMessage());
+      System.out.println("No players loaded");
     }
     return allReturn;
   }
