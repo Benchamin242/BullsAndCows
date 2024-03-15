@@ -13,6 +13,8 @@ public class Main {
 
         String userName = scanner.nextLine().trim();
 
+        userName = userName.replace("|","<pipe>");
+
         Game game = new Game(userName,"Letters");
 
         boolean startNewGame = true;
