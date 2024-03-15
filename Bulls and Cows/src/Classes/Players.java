@@ -23,8 +23,8 @@ public class Players {
     allPlayers.add(p);
   }
 
-  public void savePlayers() {
-    try (FileWriter writer = new FileWriter("src/players.txt")){
+  public void savePlayers(Path filePath) {
+    try (FileWriter writer = new FileWriter(filePath.toString())){
       Collections.sort(allPlayers);
       for(int i = 0; i < allPlayers.size(); i++) {
         writer.write(allPlayers.get(i).toString() + (i == allPlayers.size() - 1 ? "" : "\n")); }

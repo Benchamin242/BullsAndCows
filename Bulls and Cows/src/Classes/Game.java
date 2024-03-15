@@ -16,12 +16,12 @@ public class Game {
     private String lastGuess;
     private Players players;
     private SecretCode code;
+    private final Path playersFilePath = Paths.get("Bulls and Cows/src/players.txt").toAbsolutePath();
 
     public Game(String playerName, String codeType) {
        this.codeType = codeType;
-       Path playerFilePath = Paths.get("Bulls and Cows/src/players.txt").toAbsolutePath();
        this.code = codeType.equals("Letter") ? new LettersCode(0,0) : new NumbersCode(0,0);
-       this.players = new Players(playerFilePath);
+       this.players = new Players(playersFilePath);
        currentPlayer = this.players.getPlayer(playerName);
        if(currentPlayer == null) {
            currentPlayer = new Player(playerName,0,0,0,0,0);
@@ -54,7 +54,7 @@ public class Game {
                 currentPlayer.incrementCodesDeciphered();
                 currentPlayer.updateBulls(code.currentNumOfBulls);
                 currentPlayer.updateCows(code.currentNumOfCows);
-                players.savePlayers();
+                players.savePlayers(playersFilePath);
                 System.out.printf("Congratulations %s! You deciphered the code! You have deciphered %d code(s).%n",currentPlayer.getUsername(), currentPlayer.getCodesDeciphered());
             } else {
                 currentPlayer.updateBulls(code.currentNumOfBulls);
