@@ -1,4 +1,0 @@
-Connor|68|4|21|21|3
-mainMan|12|0|5|4|0
-Test Testerson|16|0|4|4|0
-test|4|0|1|2|0
