@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +16,7 @@ public class Players {
     allPlayers = new ArrayList<>();
     allPlayers.add(player);
   }
-  public Players(String filepath) {
+  public Players(Path filepath) {
     allPlayers = loadPlayers(filepath);
   }
   public void addPlayer(Player p) {
@@ -33,9 +34,9 @@ public class Players {
     }
   }
 
-  private static ArrayList<Player> loadPlayers(String filepath) {
+  private static ArrayList<Player> loadPlayers(Path filepath) {
     ArrayList<Player> allReturn = new ArrayList<>();
-    try (Scanner sc = new Scanner(new File(filepath))){
+    try (Scanner sc = new Scanner(new File(filepath.toString()))){
       while(sc.hasNext()) {
         String line = sc.nextLine();
         String[] split = line.split("\\|");

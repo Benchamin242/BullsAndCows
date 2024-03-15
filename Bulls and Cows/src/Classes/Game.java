@@ -5,6 +5,8 @@ import Codes.NumbersCode;
 import Codes.SecretCode;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -17,8 +19,9 @@ public class Game {
 
     public Game(String playerName, String codeType) {
        this.codeType = codeType;
+       Path playerFilePath = Paths.get("Bulls and Cows/src/players.txt").toAbsolutePath();
        this.code = codeType.equals("Letter") ? new LettersCode(0,0) : new NumbersCode(0,0);
-       this.players = new Players("src/players.txt");
+       this.players = new Players(playerFilePath);
        currentPlayer = this.players.getPlayer(playerName);
        if(currentPlayer == null) {
            currentPlayer = new Player(playerName,0,0,0,0,0);
