@@ -9,24 +9,30 @@ import java.util.Map;
 import java.util.Random;
 
 public class LettersCode extends SecretCode {
-    private String wordListFile;
 
-    public LettersCode(String wordListFile) {
-        this.wordListFile = wordListFile;
+    //mostly init with 0, parameters for reading
+    public LettersCode(int b, int c) {
+        super(generateCode(),b,c);
     }
 
-    @Override
-    public void generateCode() throws IOException{
-        List<String> wordList = readWordListFromFile(wordListFile);
+    private static String generateCode() {
+        String wordListFile = "WordList.csv";
+        try {
+            List<String> wordList = readWordListFromFile(wordListFile);
 
-        if (!wordList.isEmpty()) {
-            Random random = new Random();
-            int index = random.nextInt(wordList.size());
-            decipheredCode = wordList.get(index);
+            if (!wordList.isEmpty()) {
+                Random random = new Random();
+                int index = random.nextInt(wordList.size());
+                return wordList.get(index);
+            }
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
+        return null;
     }
 
-    private List<String> readWordListFromFile(String filename) throws IOException{
+    private static List<String> readWordListFromFile(String filename) throws IOException{
         List<String> wordList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("src/"+filename))) {
             String line;

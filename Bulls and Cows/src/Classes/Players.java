@@ -5,11 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class Players {
   private ArrayList<Player> allPlayers;
-
+  public Players(Player player) {
+    allPlayers = new ArrayList<>();
+    allPlayers.add(player);
+  }
   public Players(String filepath) {
     allPlayers = loadPlayers(filepath);
   }
@@ -18,11 +23,11 @@ public class Players {
   }
 
   public void savePlayers() {
-    try {
-      FileWriter writer = new FileWriter("src/players.txt");
+    try (FileWriter writer = new FileWriter("src/players.txt")){
+      Collections.sort(allPlayers);
       for(int i = 0; i < allPlayers.size(); i++) {
         writer.write(allPlayers.get(i).toString() + (i == allPlayers.size() - 1 ? "" : "\n")); }
-      System.out.println("file wrote successfully");
+      System.out.println("Players saved!");
     } catch (IOException e) {
       System.out.println(e.getMessage());
     }
@@ -30,11 +35,12 @@ public class Players {
 
   private static ArrayList<Player> loadPlayers(String filepath) {
     ArrayList<Player> allReturn = new ArrayList<>();
-    try {
-      Scanner sc = new Scanner(new File(filepath));
+    try (Scanner sc = new Scanner(new File(filepath))){
       while(sc.hasNext()) {
+        String line = sc.nextLine();
+        String[] split = line.split("\\|");
         // ------------------->  name      bulls        cows         CD           CA
-        allReturn.add(new Player(sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt()));
+        allReturn.add(new Player(split[0],Integer.parseInt(split[1]),Integer.parseInt(split[2]),Integer.parseInt(split[3]),Integer.parseInt(split[4]),Integer.parseInt(split[5])));
       }
     } catch (FileNotFoundException e) {
       System.out.println(e.getMessage());

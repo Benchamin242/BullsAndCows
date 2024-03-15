@@ -2,15 +2,19 @@ package Codes;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class SecretCode {
     public String decipheredCode;
-    public int currentNumOfBulls = 0;
-    public int currentNumOfCows = 0;
+    public int currentNumOfBulls;
+    public int currentNumOfCows;
 
-    public abstract void generateCode() throws IOException;
+    //abstract constructor is only used for read in, may as well just act as a field malloc
+    public SecretCode(String code, int b, int c) {
+        decipheredCode = code;
+        currentNumOfBulls = b;
+        currentNumOfCows = c;
+    }
+
 
     public abstract void makeGuess(String userInput) throws IllegalArgumentException;
 
@@ -43,5 +47,9 @@ public abstract class SecretCode {
 
         currentNumOfBulls = bullsIndexList.size();
         currentNumOfCows = numberOfCows;
+    }
+
+    public String getCode() {
+        return decipheredCode;
     }
 }

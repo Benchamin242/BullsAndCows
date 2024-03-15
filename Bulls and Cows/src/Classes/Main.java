@@ -1,13 +1,31 @@
 package Classes;
 
+import Codes.LettersCode;
+import Codes.NumbersCode;
+
+import java.util.Scanner;
+
 public class Main {
+    private static final Scanner scanner =  new Scanner(System.in);
 
     public static void main(String[] args) {
-        Player player = new Player();
-        Game game = new Game(player,"Letters");
-        //Game game = new Classes.Game(player);
-        while (true){
+        System.out.print("Enter username: ");
+
+        String userName = scanner.nextLine().trim();
+
+        Game game = new Game(userName,"Letters");
+
+        boolean startNewGame = true;
+        while (startNewGame){
             game.PlayGame();
+
+            System.out.print("New game? (y/n): ");
+
+            String newGame = scanner.nextLine();
+
+            if(newGame.trim().equalsIgnoreCase("n")){
+                startNewGame = false;
+            }
         }
     }
 }

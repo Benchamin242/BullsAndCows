@@ -8,7 +8,7 @@ public class PlayerTests {
 
     @Test
     public void testParameterizedConstructor() {
-        Player player = new Player("Test Testerson", 2, 1, 5, 3);
+        Player player = new Player("Test Testerson", 2, 1, 5, 3,5);
 
         assertEquals("Test Testerson", player.getUsername());
         assertEquals(2, player.getBulls());

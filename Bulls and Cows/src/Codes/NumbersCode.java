@@ -2,12 +2,16 @@ package Codes;
 
 import Codes.SecretCode;
 
+import java.io.IOException;
 import java.util.*;
 
 public class NumbersCode extends SecretCode {
 
-    @Override
-    public void generateCode(){
+    public NumbersCode(int b, int c) {
+        super(generateCode(), b, c);
+    }
+
+    private static String generateCode(){
         List<Integer> numbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
             numbers.add(i);
@@ -21,7 +25,7 @@ public class NumbersCode extends SecretCode {
             result.append(numbers.get(i).toString());
         }
 
-        decipheredCode = result.toString();
+       return result.toString();
     }
 
     @Override
