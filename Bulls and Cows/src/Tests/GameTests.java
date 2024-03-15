@@ -33,30 +33,29 @@ public class GameTests {
     }
 */
 
-    @Test
-    public void testConstructorWithoutCodeType() {
-        Game game = new Game(player,new NumbersCode());
-
-        assertNotNull(game);
-    }
+//    @Test
+//    public void testConstructorWithoutCodeType() {
+//        Game game = new Game(player,new NumbersCode());
+//
+//        assertNotNull(game);
+//    }
 
     @Before
     public void initSG1() {
-        code = new NumbersCode();
-        player = new Player("idiot", 0, 0, 0,0,0);
-        game = new Game(player,code);
-        filePath = "saveGametest.csv";
+        code = new NumbersCode(0,0);
 
+        game = new Game("idiot","numbers");
+        filePath = "/Users/mux/documents/uni/year-2/cs207/cs207-bulls-and-cows/Bulls and Cows/src/testSave.txt";
     }
 
     //delete player name form the file before running test
     @Test
     public void saveGameAppend() throws FileNotFoundException {
          //testfile
-        game.saveGame("src/Tests/saveGametest.csv", "1_0_"); //save with current guess
-        Scanner sc = new Scanner(new File("src/Tests/saveGametest.csv"));
+        game.saveGame(filePath, "1_0_"); //save with current guess
+        Scanner sc = new Scanner(new File(filePath));
         String code_check = "", guess_check = "";
-        String playerName = "idiot";
+        String playerName = "idiot"; //change for append test
         int b = -1, c = -1;
 
         while(sc.hasNext()) {
@@ -68,6 +67,7 @@ public class GameTests {
                 c = line_s.nextInt();
             }
         }
+        sc.close();
         assertEquals(code_check,code.decipheredCode);
         assertEquals(code.currentNumOfBulls,b);
         assertEquals(code.currentNumOfCows,c);

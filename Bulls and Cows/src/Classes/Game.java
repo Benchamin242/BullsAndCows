@@ -4,9 +4,7 @@ import Codes.LettersCode;
 import Codes.NumbersCode;
 import Codes.SecretCode;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,7 +17,7 @@ public class Game {
 
     public Game(String playerName, String codeType) {
        this.codeType = codeType;
-       this.code = codeType.equals("Letter") ? new LettersCode("src/WordList.csv") : new NumbersCode();
+       this.code = codeType.equals("Letter") ? new LettersCode(0,0) : new NumbersCode(0,0);
        this.players = new Players("src/players.txt");
        currentPlayer = this.players.getPlayer(playerName);
        if(currentPlayer == null) {
@@ -28,33 +26,7 @@ public class Game {
        }
     }
 
-    //Game constructor for tests
-    public Game(Player p, SecretCode s) {
-        this.codeType = s.codeType;
-        this.code = codeType.equals("Letter") ? new LettersCode("src/WordList.csv") : new NumbersCode();
-        this.players = new Players(p);
-        currentPlayer = p;
-        if(currentPlayer == null) {
-            currentPlayer = new Player("playerName",0,0,0,0,0);
-            this.players.addPlayer(currentPlayer);
-        }
-    }
-
     public void PlayGame() {
-
-        if (codeType.equals("Numbers")) {
-            code = new NumbersCode();
-        } else {
-            code = new LettersCode("WordList.csv");
-        }
-
-        try {
-            code.generateCode();
-        } catch (IOException e) {
-            System.err.println("Error reading word file");
-            System.exit(-1);
-        }
-
         System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
 
         String userGuess;
@@ -116,9 +88,9 @@ public class Game {
 
         SecretCode code;
         if (codeType.equals("Numbers")) {
-            code = new NumbersCode();
+            code = new NumbersCode(0,0);
         } else {
-            code = new LettersCode("WordList.csv");
+            code = new LettersCode(0,0);
         }
 
         Map<String, Integer> bullsAndCows = null;
@@ -146,16 +118,14 @@ public class Game {
         // TODO add b & c to SecretCode and write to this fill, le string format plus getters
         try {
             File f = new File(filepath);
-            System.out.println(f.exists());
-            File tmp = new File("src/temp.txt");
-            Scanner sc = new Scanner(f);
-            FileWriter fw = new FileWriter(tmp);
-            String override = String.format("%s %s %s %d %d", currentPlayer.getUsername(), currGuess, code.decipheredCode, code.currentNumOfBulls, code.currentNumOfCows);
+            BufferedReader read = new BufferedReader(new FileReader(f));
+            String override = String.format("%s %s %s %d %d", currentPlayer.getUsername(), currGuess, code.getCode(), code.currentNumOfBulls, code.currentNumOfCows);
+            StringBuilder fileContent = new StringBuilder();
             boolean found = false;
 
             //check if the player already has a saved game
-            while (sc.hasNext()) {
-                String line = sc.nextLine();
+            String line;
+            while ((line = read.readLine()) != null) {
                 //check for currentPlayer
                 if (line.contains(currentPlayer.getUsername())) {
                     //comment/uncomment out what you need
@@ -163,29 +133,27 @@ public class Game {
 //                    System.out.print("do you want to overwrite your current saved game? y/n: ");
 //                    String yes_no = new Scanner(System.in).nextLine();
 //                    if(yes_no.charAt(0) == 'y') {
-//                        fw.write(override + System.lineSeparator());
+//                        fileContent.append(override).append(System.lineSeparator());
 //                        found = true;
 //                    } else System.out.println("aborting overwrite");
                     //for tests
-                    fw.write(override + System.lineSeparator());
+                    fileContent.append(override).append(System.lineSeparator());
                     found = true;
                 } else {
-                    fw.write(line + System.lineSeparator());
+                    fileContent.append(line).append(System.lineSeparator());
                 }
             }
-            sc.close();
             //append if not already in file
             if (!found)
-                fw.write(override);
+                fileContent.append(override).append(System.lineSeparator());
+            read.close();
+            System.out.println(fileContent.toString());
+            FileWriter fw = new FileWriter(f);
+            fw.write(fileContent.toString());
             fw.close();
 
+
             //delete and rename
-            if (!f.delete()) {
-                System.out.println("failed to delete original file");
-            }
-            if (!tmp.renameTo(f)) {
-                System.out.println("failed to rewrite file");
-            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

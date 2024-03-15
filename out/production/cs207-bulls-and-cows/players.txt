@@ -1,0 +1,4 @@
+Connor|64|4|20|20|2
+mainMan|12|0|4|5|0
+Test Testerson|16|0|4|4|0
+test|4|0|2|1|0
