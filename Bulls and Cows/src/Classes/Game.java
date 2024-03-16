@@ -12,15 +12,14 @@ import java.util.Scanner;
 
 public class Game {
     private Player currentPlayer;
-    private final String codeType;
+    private String codeType;
     private String lastGuess;
     private final Players players;
-    private final SecretCode code;
+    private SecretCode code;
     private final Path playersFilePath = Paths.get("Bulls and Cows/src/players.txt").toAbsolutePath();
 
     public Game(String playerName, String codeType) {
        this.codeType = codeType;
-       this.code = codeType.equals("Letter") ? new LettersCode(0,0) : new NumbersCode(0,0);
        this.players = new Players(playersFilePath);
        currentPlayer = this.players.getPlayer(playerName);
        if(currentPlayer == null) {
@@ -40,7 +39,9 @@ public class Game {
     //read Game
 
     public void PlayGame() {
-        //System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
+        this.code = codeType.equals("Letter") ? new LettersCode(0,0) : new NumbersCode(0,0);
+
+        System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
 
         String userGuess;
 
