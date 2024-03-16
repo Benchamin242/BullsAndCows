@@ -29,6 +29,11 @@ public class Game {
        }
     }
 
+    public Game(Player p) {
+        currentPlayer = p;
+        code = new NumbersCode(0,0);
+    }
+
     public void PlayGame() {
         System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
 
@@ -122,7 +127,7 @@ public class Game {
         try {
             File f = new File(filepath);
             BufferedReader read = new BufferedReader(new FileReader(f));
-            String override = String.format("%s %s %s %d %d", currentPlayer.getUsername(), currGuess, code.getCode(), code.currentNumOfBulls, code.currentNumOfCows);
+            String override = String.format("%s %s %s %d %d", currentPlayer.getUsername(), currGuess, code.decipheredCode, code.currentNumOfBulls, code.currentNumOfCows);
             StringBuilder fileContent = new StringBuilder();
             boolean found = false;
 
@@ -146,10 +151,10 @@ public class Game {
                     fileContent.append(line).append(System.lineSeparator());
                 }
             }
+            read.close();
             //append if not already in file
             if (!found)
                 fileContent.append(override).append(System.lineSeparator());
-            read.close();
             System.out.println(fileContent.toString());
             FileWriter fw = new FileWriter(f);
             fw.write(fileContent.toString());
@@ -160,5 +165,9 @@ public class Game {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public SecretCode getCode() {
+        return code;
     }
 }
