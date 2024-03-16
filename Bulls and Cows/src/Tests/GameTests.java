@@ -10,6 +10,7 @@ import Codes.LettersCode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -43,7 +44,10 @@ public class GameTests {
 
     @Before
     public void initSG1() {
-        filePath = Paths.get("Bulls and Cows/src/testSave.txt").toAbsolutePath().toString();
+        code = new NumbersCode(0,0);
+
+        game = new Game("idiot","numbers");
+        filePath = Paths.get("Bulls and Cows/src/Tests/gameTests.txt").toAbsolutePath().toString();
     }
 
     //delete player name form the file before running test
