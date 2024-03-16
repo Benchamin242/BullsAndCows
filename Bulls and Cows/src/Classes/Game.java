@@ -32,6 +32,7 @@ public class Game {
     public Game(Player p) {
         currentPlayer = p;
         code = new NumbersCode(0,0);
+        players = new Players(playersFilePath);
     }
 
     //read Game
@@ -178,10 +179,11 @@ public class Game {
 
             String line; // \\s+ \\s+ \\s+ \\d \\d
             while((line = bf.readLine()) != null) {
+                System.out.println(line);
                 Scanner contents = new Scanner(line);
 
                 if(contents.next().equals(p_name)) {
-                    currentPlayer = players.getPlayer(p_name);
+                    this.currentPlayer = players.getPlayer(p_name);
                     guess = contents.next();
                     String code_lit = contents.next();
                     if(code_lit.charAt(0) > 47 && code_lit.charAt(0) < 59) {
