@@ -89,6 +89,22 @@ public class GameTests {
 
     }
 
+    @Test
+    public void testLoad1() {
+        String playername = "notFound";
+        filePath = Paths.get("Bulls and Cows/src/testLoad.txt").toAbsolutePath().toString();
+        game = new Game(new Player("toreplace",0,0,0,0,0));
+        String guess = game.loadGame(filePath, playername);
+
+        assertEquals("____", guess);
+
+        filePath = "";
+        game = new Game(new Player("toreplace",0,0,0,0,0));
+        guess = game.loadGame(filePath, playername);
+
+        assertEquals("____",guess);
+    }
+
 
 
 }
