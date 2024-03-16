@@ -34,6 +34,8 @@ public class Game {
         code = new NumbersCode(0,0);
     }
 
+    //read Game
+
     public void PlayGame() {
         System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
 
@@ -167,6 +169,42 @@ public class Game {
         }
     }
 
+    //returns the current guess
+    public String loadGame(String filePath, String p_name) {
+        String guess = "____";
+        boolean found = false;
+        try {
+            BufferedReader bf = new BufferedReader(new FileReader(new File(filePath)));
+
+            String line; // \\s+ \\s+ \\s+ \\d \\d
+            while((line = bf.readLine()) != null) {
+                Scanner contents = new Scanner(line);
+
+                if(contents.next().equals(p_name)) {
+                    currentPlayer = players.getPlayer(p_name);
+                    guess = contents.next();
+                    String code_lit = contents.next();
+                    if(code_lit.charAt(0) > 47 && code_lit.charAt(0) < 59) {
+                        code = new NumbersCode(code_lit,contents.nextInt(), contents.nextInt());
+                    }
+                    else { //                            bulls               cows
+                        code = new LettersCode(code_lit, contents.nextInt(), contents.nextInt());
+                    }
+                    found = true;
+                }
+            }
+
+            if(!found) {
+                System.out.println("this player does not have a saved game");
+            }
+
+        } catch(FileNotFoundException e) {
+            System.out.println("the save file is missing");
+        } catch (IOException e) {
+            System.out.println("the save file is corrupted");
+        }
+        return guess;
+    }
     public SecretCode getCode() {
         return code;
     }
