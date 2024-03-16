@@ -11,6 +11,7 @@ public class NumbersCode extends SecretCode {
         super(generateCode(), b, c);
     }
 
+    //added for reading in codes
     public NumbersCode(String code, int b , int c) {
         super(code, b, c);
     }

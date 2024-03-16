@@ -29,6 +29,8 @@ public class Game {
        }
     }
 
+    //anything added for the tests can be removed from final version(iteration 3 finished)
+    //added for load game tests
     public Game(Player p) {
         currentPlayer = p;
         code = new NumbersCode(0,0);
@@ -172,12 +174,13 @@ public class Game {
 
     //returns the current guess
     public String loadGame(String filePath, String p_name) {
+        //default guess if there isn't one
         String guess = "____";
         boolean found = false;
         try {
             BufferedReader bf = new BufferedReader(new FileReader(new File(filePath)));
 
-            String line; // \\s+ \\s+ \\s+ \\d \\d
+            String line; // of the form: %s %s %s %d %d
             while((line = bf.readLine()) != null) {
                 System.out.println(line);
                 Scanner contents = new Scanner(line);
@@ -207,6 +210,8 @@ public class Game {
         }
         return guess;
     }
+
+    //added for assertEquals comparisons
     public SecretCode getCode() {
         return code;
     }

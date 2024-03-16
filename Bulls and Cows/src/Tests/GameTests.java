@@ -20,6 +20,7 @@ public class GameTests {
     private Game game;
     private String filePath;
 
+    //commented out bc @Before was acting funny
 //    @Before
 //    public void before(){
 //        player = new Player("Test Testerson", 0, 0, 0, 0,0); }
@@ -46,6 +47,8 @@ public class GameTests {
     }
 
     //delete player name form the file before running test
+
+    //save Game test, run once to append then again to replace
     @Test
     public void saveGameAppend() throws FileNotFoundException {
         String playername = "dumb";
@@ -77,7 +80,7 @@ public class GameTests {
     }
 
     @Test
-    public void testLoad() {
+    public void testLoad() { //scenario 1
         String playername = "load";
         filePath = Paths.get("Bulls and Cows/src/testLoad.txt").toAbsolutePath().toString();
         game = new Game(new Player("toreplace",0,0,0,0,0));
@@ -90,7 +93,7 @@ public class GameTests {
     }
 
     @Test
-    public void testLoad1() {
+    public void testLoad1() { //scenario 2 & 3
         String playername = "notFound";
         filePath = Paths.get("Bulls and Cows/src/testLoad.txt").toAbsolutePath().toString();
         game = new Game(new Player("toreplace",0,0,0,0,0));

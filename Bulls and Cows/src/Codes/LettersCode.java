@@ -16,6 +16,8 @@ public class LettersCode extends SecretCode {
     public LettersCode(int b, int c) {
         super(generateCode(),b,c);
     }
+
+    //added for reading in codes
     public LettersCode(String code, int b , int c) {
         super(code,b,c);
     }
