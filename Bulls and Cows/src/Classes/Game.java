@@ -29,6 +29,16 @@ public class Game {
        }
     }
 
+    //anything added for the tests can be removed from final version(iteration 3 finished)
+    //added for load game tests
+    public Game(Player p) {
+        currentPlayer = p;
+        code = new NumbersCode(0,0);
+        players = new Players(playersFilePath);
+    }
+
+    //read Game
+
     public void PlayGame() {
         //System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
 
@@ -123,7 +133,7 @@ public class Game {
         try {
             File f = new File(filepath);
             BufferedReader read = new BufferedReader(new FileReader(f));
-            String override = String.format("%s %s %s %d %d", currentPlayer.getUsername(), currGuess, code.getCode(), code.currentNumOfBulls, code.currentNumOfCows);
+            String override = String.format("%s %s %s %d %d", currentPlayer.getUsername(), currGuess, code.decipheredCode, code.currentNumOfBulls, code.currentNumOfCows);
             StringBuilder fileContent = new StringBuilder();
             boolean found = false;
 
@@ -147,10 +157,10 @@ public class Game {
                     fileContent.append(line).append(System.lineSeparator());
                 }
             }
+            read.close();
             //append if not already in file
             if (!found)
                 fileContent.append(override).append(System.lineSeparator());
-            read.close();
             System.out.println(fileContent.toString());
             FileWriter fw = new FileWriter(f);
             fw.write(fileContent.toString());
@@ -161,5 +171,49 @@ public class Game {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    //returns the current guess
+    public String loadGame(String filePath, String p_name) {
+        //default guess if there isn't one
+        String guess = "____";
+        boolean found = false;
+        try {
+            BufferedReader bf = new BufferedReader(new FileReader(new File(filePath)));
+
+            String line; // of the form: %s %s %s %d %d
+            while((line = bf.readLine()) != null) {
+                System.out.println(line);
+                Scanner contents = new Scanner(line);
+
+                if(contents.next().equals(p_name)) {
+                    this.currentPlayer = players.getPlayer(p_name);
+                    guess = contents.next();
+                    String code_lit = contents.next();
+                    if(code_lit.charAt(0) > 47 && code_lit.charAt(0) < 59) {
+                        code = new NumbersCode(code_lit,contents.nextInt(), contents.nextInt());
+                    }
+                    else { //                            bulls               cows
+                        code = new LettersCode(code_lit, contents.nextInt(), contents.nextInt());
+                    }
+                    found = true;
+                }
+            }
+
+            if(!found) {
+                System.out.println("this player does not have a saved game");
+            }
+
+        } catch(FileNotFoundException e) {
+            System.out.println("the save file is missing");
+        } catch (IOException e) {
+            System.out.println("the save file is corrupted");
+        }
+        return guess;
+    }
+
+    //added for assertEquals comparisons
+    public SecretCode getCode() {
+        return code;
     }
 }
