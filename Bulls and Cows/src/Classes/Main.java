@@ -1,8 +1,5 @@
 package Classes;
 
-import Codes.LettersCode;
-import Codes.NumbersCode;
-
 import java.util.Scanner;
 
 public class Main {
@@ -15,7 +12,7 @@ public class Main {
 
         userName = userName.replace("|","<pipe>");
 
-        Game game = new Game(userName,"Letters");
+        Game game = new Game(userName,"Numbers");
 
         boolean startNewGame = true;
         while (startNewGame){
