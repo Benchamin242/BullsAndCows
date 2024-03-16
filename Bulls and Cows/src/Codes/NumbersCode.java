@@ -11,6 +11,11 @@ public class NumbersCode extends SecretCode {
         super(generateCode(), b, c);
     }
 
+    //added for reading in codes
+    public NumbersCode(String code, int b , int c) {
+        super(code, b, c);
+    }
+
     private static String generateCode(){
         List<Integer> numbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){

@@ -17,6 +17,11 @@ public class LettersCode extends SecretCode {
         super(generateCode(),b,c);
     }
 
+    //added for reading in codes
+    public LettersCode(String code, int b , int c) {
+        super(code,b,c);
+    }
+
     private static String generateCode() {
         String wordListFile = "WordList.csv";
         try {
