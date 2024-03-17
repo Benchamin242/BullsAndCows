@@ -68,13 +68,40 @@ public class Game {
                 currentPlayer.updateCows(code.currentNumOfCows);
                 players.savePlayers(playersFilePath);
                 System.out.printf("Congratulations %s! You deciphered the code! You have deciphered %d code(s).%n",currentPlayer.getUsername(), currentPlayer.getCodesDeciphered());
+
+
+                displayAllTimeStatistics(currentPlayer.getUsername());
             } else {
                 currentPlayer.updateBulls(code.currentNumOfBulls);
                 currentPlayer.updateCows(code.currentNumOfCows);
                 System.out.printf("%s Bulls, %s Cows.%n", code.currentNumOfBulls, code.currentNumOfCows);
+
             }
         }
     }
+
+
+    private void displayAllTimeStatistics(String username) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(playersFilePath.toString()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] playerData = line.split("\\|");
+                if (playerData[0].equals(username)) {
+                    // Extracts data from the line and display the statistics
+                    String message = String.format("%s, Your all-time statistics are %d total bulls, %d total cows, %d codes attempted, %d codes deciphered and %d attempts",
+                            username, Integer.parseInt(playerData[1]), Integer.parseInt(playerData[2]),
+                            Integer.parseInt(playerData[3]), Integer.parseInt(playerData[4]), Integer.parseInt(playerData[5]));
+                    System.out.println(message);
+                    break;
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the player file.");
+        }
+    }
+
 
     private String getUserGuess() {
         Scanner scan = new Scanner(System.in);
