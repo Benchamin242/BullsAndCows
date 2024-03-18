@@ -1,6 +1,6 @@
 package Tests;
 
-/*
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import Classes.Player;
 
 public class PlayersTests {
 
-    private final Path playersFilePath = Paths.get("Bulls and Cows/src/Tests/playersTests.txt").toAbsolutePath();
+    private final Path playersFilePath = Paths.get("src/Tests/playersTests.txt").toAbsolutePath();
     private Players players;
 
     @BeforeEach
@@ -90,4 +90,3 @@ public class PlayersTests {
     }
 }
 
-*/
