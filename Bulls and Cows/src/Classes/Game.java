@@ -54,6 +54,12 @@ public class Game {
             currentPlayer.incrementNumberOfGuesses();
             lastGuess = userGuess;
 
+            //current solution for ending game
+            if(userGuess.equalsIgnoreCase("show")) {
+                showSol();
+                break;
+            }
+
             try {
                 code.makeGuess(userGuess);
             } catch (Exception e) {
@@ -238,6 +244,10 @@ public class Game {
             System.out.println("the save file is corrupted");
         }
         return guess;
+    }
+
+    public void showSol() {
+        System.out.println("The solution is " + code.decipheredCode);
     }
 
     //added for assertEquals comparisons

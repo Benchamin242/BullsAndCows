@@ -7,10 +7,9 @@ import Classes.Player;
 import Codes.SecretCode;
 import Codes.NumbersCode;
 import Codes.LettersCode;
+import org.junit.jupiter.api.BeforeEach;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -19,6 +18,7 @@ public class GameTests {
 
     private Player player;
     private SecretCode code;
+    private ByteArrayOutputStream outputStream;
     private Game game;
     private String filePath;
 
@@ -118,6 +118,27 @@ public class GameTests {
     }
 
 
+    @Before
+    public void showSolInit() {
+        outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+    }
 
+    @After
+    public void tearDown() { //make sure print gets set back to normal
+        System.setOut(System.out);
+    }
+
+    //might contain output stream issue between versions, debug and look for first expected value in the stream
+    @Test
+    public void showSolTest() {
+        game = new Game(new Player("stupid",0,0,0,0,0));
+        game.showSol();
+        String printString = outputStream.toString();
+        String[] streamOutput = printString.split("\n"); //"No players loaded" getting caught in the output stream
+        //testing for the correct code
+        assertEquals("The solution is", streamOutput[1].substring(0,15)); //first section of print
+        assertEquals(4,streamOutput[1].substring(16).length()); //substring for the code
+        assertEquals(game.getCode().decipheredCode, streamOutput[1].substring(16));
+    }
 }
-
