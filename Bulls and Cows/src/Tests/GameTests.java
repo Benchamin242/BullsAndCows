@@ -138,7 +138,7 @@ public class GameTests {
         String[] streamOutput = printString.split("\n"); //"No players loaded" getting caught in the output stream
         //testing for the correct code
         assertEquals("The solution is", streamOutput[1].substring(0,15)); //first section of print
-        assertEquals(4,streamOutput[1].substring(16).length()); //substring for the code
+        assertEquals(game.getCode().decipheredCode.length(),streamOutput[1].substring(16).length()); //substring for the code
         assertEquals(game.getCode().decipheredCode, streamOutput[1].substring(16));
     }
 }

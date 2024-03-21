@@ -20,8 +20,8 @@ public abstract class SecretCode {
 
 
     protected void getBullsAndCows(String userInput) {
-        if (userInput.length() != 4){
-            throw new IllegalArgumentException("Guess needs to be of length 4");
+        if (userInput.length() != 8){
+            throw new IllegalArgumentException("Guess needs to be of length 8");
         }
 
         char[] inputArray = userInput.toCharArray();

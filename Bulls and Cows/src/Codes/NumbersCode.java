@@ -26,7 +26,7 @@ public class NumbersCode extends SecretCode {
 
         StringBuilder result = new StringBuilder();
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 8; i++){
             result.append(numbers.get(i).toString());
         }
 
