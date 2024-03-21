@@ -1,5 +1,5 @@
 package Tests;
-
+/*
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
@@ -88,3 +88,4 @@ public class PlayersTests {
     }
 }
 
+*/

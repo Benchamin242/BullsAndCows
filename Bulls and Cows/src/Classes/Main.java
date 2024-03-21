@@ -10,12 +10,14 @@ public class Main {
 
         String userName = scanner.nextLine().trim();
 
+
         userName = userName.replace("|","<pipe>");
 
         Game game = new Game(userName,"Numbers");
 
         boolean startNewGame = true;
         while (startNewGame){
+
             game.PlayGame();
 
             System.out.print("New game? (y/n): ");
