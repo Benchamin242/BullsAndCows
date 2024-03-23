@@ -67,7 +67,7 @@ public class Game {
                 continue;
             }
 
-            if (code.currentNumOfBulls == 4) {
+            if (code.currentNumOfBulls == 8) {
                 codeDeciphered = true;
                 currentPlayer.incrementCodesDeciphered();
                 currentPlayer.updateBulls(code.currentNumOfBulls);

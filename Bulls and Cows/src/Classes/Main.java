@@ -12,7 +12,7 @@ public class Main {
 
         userName = userName.replace("|","<pipe>");
 
-        Game game = new Game(userName,"Numbers");
+        Game game = new Game(userName,"Letter");
 
         boolean startNewGame = true;
         while (startNewGame){
