@@ -40,7 +40,14 @@ public class Game {
 
     public void PlayGame() {
 
-        //make code for user to load a previously saved game, but only if they have one
+        System.out.print("Would you like to see top 10 scores to know what you have to get to be in the leaderboards? (yes/no): ");
+        String leaderOption = new Scanner(System.in).nextLine().trim().toLowerCase();
+
+        if (leaderOption.equals("yes")) {
+            players.displayTop10();
+        }
+
+
         System.out.print("Would you like to load a saved game? (yes/no): ");
         String loadOption = new Scanner(System.in).nextLine().trim().toLowerCase();
 
@@ -53,7 +60,7 @@ public class Game {
 
         this.code = codeType.equals("Letter") ? new LettersCode(0,0) : new NumbersCode(0,0);
 
-        System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
+       // System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
 
         String userGuess;
 
@@ -76,18 +83,32 @@ public class Game {
                 continue;
             }
 
-            if (code.currentNumOfBulls == 4) {
+            if (code.currentNumOfBulls == 8) {
                 codeDeciphered = true;
                 currentPlayer.incrementCodesDeciphered();
                 currentPlayer.updateBulls(code.currentNumOfBulls);
                 currentPlayer.updateCows(code.currentNumOfCows);
                 players.savePlayers(playersFilePath);
                 System.out.printf("Congratulations %s! You deciphered the code! You have deciphered %d code(s).%n",currentPlayer.getUsername(), currentPlayer.getCodesDeciphered());
+                displayAllTimeStatistics(currentPlayer.getUsername());
             } else {
                 currentPlayer.updateBulls(code.currentNumOfBulls);
                 currentPlayer.updateCows(code.currentNumOfCows);
                 System.out.printf("%s Bulls, %s Cows.%n", code.currentNumOfBulls, code.currentNumOfCows);
-            }
+
+                //ask user if they would like see the solution, if yes, showsolution, if not ask if they want a hint, give them a number and tell them what position it is in, and if they ask again, give another number and position
+
+                System.out.print("Would you like to see the solution? (yes/no): ");
+                String showSolOption = scan.nextLine().trim().toLowerCase();
+                if (showSolOption.equals("yes")) {
+                    showSol();
+                } else {
+                    System.out.print("Would you like a hint? (yes/no): ");
+                    String hintOption = scan.nextLine().trim().toLowerCase();
+                    if (hintOption.equals("yes")) {
+                        System.out.println("Here is a hint: " + code.getHint());
+                    }
+}
 
             System.out.print("Do you want to save your current progress? (yes/no): ");
             String saveOption = scan.nextLine().trim().toLowerCase();
@@ -96,6 +117,7 @@ public class Game {
                 String filepath = Paths.get("Codes.txt").toAbsolutePath().toString();
                 saveGame(filepath, userGuess);
                 System.out.println("Game saved successfully!");
+            }
             }
         }
     }
@@ -120,6 +142,8 @@ public class Game {
             System.out.println("An error occurred while reading the player file.");
         }
     }
+
+
 
 
     private String getUserGuess() {
@@ -267,4 +291,6 @@ public class Game {
     public SecretCode getCode() {
         return code;
     }
+
+
 }

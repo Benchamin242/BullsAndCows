@@ -92,4 +92,15 @@ public class Players {
   public ArrayList<Player> getAllPlayers() {
     return allPlayers;
   }
+
+  // implement displayTopPlayers, which displays the top 10 players based on the number of codes deciphered
+  public void displayTop10() {
+    Collections.sort(allPlayers);
+
+    System.out.println("Top 10 players based on the number of codes deciphered:");
+    for (int i = 0; i < Math.min(10, allPlayers.size()); i++) {
+      System.out.println((i + 1) + ". " + allPlayers.get(i).getUsername() + " - " + allPlayers.get(i).getCodesDeciphered());
+    }
+  }
 }
+

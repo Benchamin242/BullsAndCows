@@ -52,4 +52,10 @@ public abstract class SecretCode {
     public String getCode() {
         return decipheredCode;
     }
+
+   //implement getHint, which gives one letter of the code, and the position it is in
+    public String getHint() {
+        int index = (int) (Math.random() * 8);
+        return decipheredCode.charAt(index) + " at position " + index+1;
+    }
 }
