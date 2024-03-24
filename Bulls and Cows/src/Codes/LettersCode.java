@@ -41,7 +41,7 @@ public class LettersCode extends SecretCode {
 
     private static List<String> readWordListFromFile(String filename) throws IOException{
         List<String> wordList = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(Paths.get("src/"+filename).toAbsolutePath().toString()))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(Paths.get(filename).toAbsolutePath().toString()))) {
             String line;
             while ((line = br.readLine()) != null) {
 

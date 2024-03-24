@@ -16,7 +16,7 @@ public class Game {
     private String lastGuess;
     private final Players players;
     private SecretCode code;
-    private final Path playersFilePath = Paths.get("src/players.txt").toAbsolutePath();
+    private final Path playersFilePath = Paths.get("players.txt").toAbsolutePath();
 
     public Game(String playerName, String codeType) {
        this.codeType = codeType;
