@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/copilot/chatSessions" />
     </content>
+    <orderEntry type="jdk" jdkName="17" jdkType="JavaSDK" />
     <orderEntry type="module-library">
       <library name="JUnit4">
         <CLASSES>
@@ -32,5 +33,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

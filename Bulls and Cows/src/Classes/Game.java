@@ -16,7 +16,7 @@ public class Game {
     private String lastGuess;
     private final Players players;
     private SecretCode code;
-    private final Path playersFilePath = Paths.get("players.txt").toAbsolutePath();
+    private final Path playersFilePath = Paths.get("src/players.txt").toAbsolutePath();
 
     public Game(String playerName, String codeType) {
        this.codeType = codeType;
@@ -108,16 +108,16 @@ public class Game {
                     if (hintOption.equals("yes")) {
                         System.out.println("Here is a hint: " + code.getHint());
                     }
-}
+                }
 
             System.out.print("Do you want to save your current progress? (yes/no): ");
             String saveOption = scan.nextLine().trim().toLowerCase();
 
-            if (saveOption.equals("yes")) {
-                String filepath = Paths.get("Codes.txt").toAbsolutePath().toString();
-                saveGame(filepath, userGuess);
-                System.out.println("Game saved successfully!");
-            }
+                if (saveOption.equals("yes")) {
+                    String filepath = Paths.get("src/Codes.txt").toAbsolutePath().toString();
+                    saveGame(filepath, userGuess);
+                    System.out.println("Game saved successfully!");
+                }
             }
         }
     }
@@ -142,9 +142,6 @@ public class Game {
             System.out.println("An error occurred while reading the player file.");
         }
     }
-
-
-
 
     private String getUserGuess() {
         Scanner scan = new Scanner(System.in);
@@ -232,7 +229,7 @@ public class Game {
             //append if not already in file
             if (!found)
                 fileContent.append(override).append(System.lineSeparator());
-            System.out.println(fileContent.toString());
+            //System.out.println(fileContent.toString());
             FileWriter fw = new FileWriter(f);
             fw.write(fileContent.toString());
             fw.close();
