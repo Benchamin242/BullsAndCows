@@ -39,6 +39,18 @@ public class Game {
     //read Game
 
     public void PlayGame() {
+
+        //make code for user to load a previously saved game, but only if they have one
+        System.out.print("Would you like to load a saved game? (yes/no): ");
+        String loadOption = new Scanner(System.in).nextLine().trim().toLowerCase();
+
+        if (loadOption.equals("yes")) {
+            String guess = loadGame(codesFilePath.toString(), currentPlayer.getUsername());
+            System.out.println("Your last guess was: " + guess);
+        }
+
+
+
         this.code = codeType.equals("Letter") ? new LettersCode(0,0) : new NumbersCode(0,0);
 
         System.out.printf("The game started by %s with the code: %s%n",currentPlayer.getUsername(), code.decipheredCode);
@@ -49,16 +61,13 @@ public class Game {
 
         currentPlayer.incrementCodesAttempted();
 
+        Scanner scan = new Scanner(System.in);
+
         while (!codeDeciphered) {
+
             userGuess = getUserGuess();
             currentPlayer.incrementNumberOfGuesses();
             lastGuess = userGuess;
-
-            //current solution for ending game
-            if(userGuess.equalsIgnoreCase("show")) {
-                showSol();
-                break;
-            }
 
             try {
                 code.makeGuess(userGuess);
@@ -67,25 +76,29 @@ public class Game {
                 continue;
             }
 
-            if (code.currentNumOfBulls == 8) {
+            if (code.currentNumOfBulls == 4) {
                 codeDeciphered = true;
                 currentPlayer.incrementCodesDeciphered();
                 currentPlayer.updateBulls(code.currentNumOfBulls);
                 currentPlayer.updateCows(code.currentNumOfCows);
                 players.savePlayers(playersFilePath);
                 System.out.printf("Congratulations %s! You deciphered the code! You have deciphered %d code(s).%n",currentPlayer.getUsername(), currentPlayer.getCodesDeciphered());
-
-
-                displayAllTimeStatistics(currentPlayer.getUsername());
             } else {
                 currentPlayer.updateBulls(code.currentNumOfBulls);
                 currentPlayer.updateCows(code.currentNumOfCows);
                 System.out.printf("%s Bulls, %s Cows.%n", code.currentNumOfBulls, code.currentNumOfCows);
+            }
 
+            System.out.print("Do you want to save your current progress? (yes/no): ");
+            String saveOption = scan.nextLine().trim().toLowerCase();
+
+            if (saveOption.equals("yes")) {
+                String filepath = "Bulls and Cows/src/Codes.txt";
+                saveGame(filepath, userGuess);
+                System.out.println("Game saved successfully!");
             }
         }
     }
-
 
     private void displayAllTimeStatistics(String username) {
         try {
