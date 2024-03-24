@@ -45,7 +45,7 @@ public class Game {
         String loadOption = new Scanner(System.in).nextLine().trim().toLowerCase();
 
         if (loadOption.equals("yes")) {
-            String guess = loadGame(codesFilePath.toString(), currentPlayer.getUsername());
+            String guess = loadGame(Paths.get("src/Codes.txt").toAbsolutePath().toString(), currentPlayer.getUsername());
             System.out.println("Your last guess was: " + guess);
         }
 
@@ -93,7 +93,7 @@ public class Game {
             String saveOption = scan.nextLine().trim().toLowerCase();
 
             if (saveOption.equals("yes")) {
-                String filepath = "Bulls and Cows/src/Codes.txt";
+                String filepath = Paths.get("Codes.txt").toAbsolutePath().toString();
                 saveGame(filepath, userGuess);
                 System.out.println("Game saved successfully!");
             }
